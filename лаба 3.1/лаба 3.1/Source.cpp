@@ -72,8 +72,27 @@ public:
 	int array_size() {
 		return size;
 	}
+	bool operator &(carray& ms2) {// перегрузка оператора пересечения массивов &
+		int fl = 0;
+		carray ms3(ms2.size);
+		for (int l = 0; l < ms2.size; l++) {
+			ms3[l] = ms2[l];
+		}
+		int i = 0, j = 0;
+		for (i = 0; i < size; i++) {
+			if (ms3[j] == ms[i]) {
+				for (int k = 0; k < ms3.size; k++) {
+					ms3[k] = ms3[k + 1];
+				}
+				ms3.size--;
+			}
+			if (ms3.size == 0)  return true;
+		}
+		return false;
+
+	}
 	friend ostream& operator<<(ostream& out, const carray& array);
-	friend bool operator &(carray& ms1, carray& ms2);
+	//friend bool operator &(carray& ms1, carray& ms2);
 	friend void sort(carray& array, int size);
 };
 
@@ -83,27 +102,6 @@ ostream& operator <<(ostream& out, const carray& array) {//перегрузка оператора 
 	}
 	return out;
 }
-bool operator &(carray& ms1, carray& ms2) {// перегрузка оператора пересечения массивов &
-	int fl = 0;
-	carray ms3(ms2.size);
-	for (int l = 0; l < ms2.size; l++) {
-		ms3[l] = ms2[l];
-	}
-	int i = 0, j = 0;
-	for (i = 0; i < ms1.size; i++){
-			if (ms3[j] == ms1[i]) {
-				for (int k = 0; k < ms3.size; k++) {
-					ms3[k] = ms3[k + 1];
-				}
-				ms3.size--;
-			}
-			if (ms3.size == 0)  return true;
-	}
-	return false;
-	
-}
-//1 3 5 6 i
-//5 j
 int main() {
 	carray ms1(5),ms2(ms1);
 	int size;
